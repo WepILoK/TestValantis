@@ -1,0 +1,39 @@
+.drawer
+  .drawer-shadow
+    width: 100vw
+    height: 100vh
+    background-color: rgba(0, 0, 0, 0.22)
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 555
+
+  .drawer-shadow-hidden
+    display: none
+
+  .drawer-body
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 556
+    height: 100%
+    transform: translate(-100%)
+    visibility: hidden
+    transition: transform, 0.3s ease-in-out
+    opacity: 0
+    background-color: white
+    padding: 12px 12px
+
+    .drawer-close
+      display: flex
+      justify-content: end
+      padding-bottom: 12px
+
+      button
+        cursor: pointer
+        padding: 4px
+
+  .drawer-body-show
+    transform: translate(0)
+    visibility: visible
+    opacity: 1

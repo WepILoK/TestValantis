@@ -1,0 +1,39 @@
+.pagination
+  display: flex
+  flex-direction: row
+  justify-content: center
+  background-color: white
+
+  .pagination-item
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 40px
+    width: 40px
+    margin: 5px
+    font-weight: bold
+    font-size: 17px
+    border-radius: 50%
+    transition: background 0.4s ease-in-out
+
+    &:hover
+      cursor: pointer
+      background-color: rgba(0, 0, 0, 0.45)
+      color: white
+
+    &:disabled
+      cursor: default
+      background-color: white
+      color: #858585
+
+  .pagination-item-current
+    background-color: black
+    color: white
+
+    &:hover
+      cursor: default
+      background-color: black
+      color: white
+
+  .pagination-item-active
+    background-color: #d7d7d7
