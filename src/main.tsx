@@ -4,7 +4,7 @@ import './index.css'
 import {ProductList} from "./pages/ProductList/ProductList.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <React.StrictMode>
+  <React.StrictMode>
       <ProductList/>
-  // </React.StrictMode>,
+  </React.StrictMode>,
 )
