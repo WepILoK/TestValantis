@@ -68,27 +68,32 @@ export const useProductListController = () => {
             })
     }
 
-    useEffect(() => {
-        const getItems = () => {
-            setIsLoading(true)
+    const getItems = () => {
+        setIsLoading(true)
 
-            const requestIds = ids.slice(OFFSET * (info.currentPage - 1), (LIMIT * info.currentPage))
-            productListApi
-                .getItems({ids: requestIds})
-                .then(({data}) => {
-                    setProducts(removeDuplicates(data.result));
+        const requestIds = ids.slice(OFFSET * (info.currentPage - 1), (LIMIT * info.currentPage))
+        productListApi
+            .getItems({ids: requestIds})
+            .then(({data}) => {
+                setProducts(removeDuplicates(data.result));
+                setIsLoading(false)
+            })
+            .catch(({response}) => {
+                if (refreshCount <= 3) {
                     setIsLoading(false)
-                })
-                .catch(({response}) => {
-                    if (refreshCount <= 3) {
-                        setIsLoading(false)
-                        getItems()
-                        setRefreshCount(prev => prev + 1)
-                    }
-                    throwError(response)
-                })
+                    getItems()
+                    setRefreshCount(prev => prev + 1)
+                }
+                throwError(response)
+            })
+    }
+
+    useEffect(() => {
+        if (ids.length === 0) {
+            setProducts([])
+        } else {
+            getItems()
         }
-        getItems()
     }, [info])
 
 
