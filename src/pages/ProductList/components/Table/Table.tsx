@@ -31,12 +31,23 @@ export const Table: React.FC<ITable> = ({data, info, isLoading, nextPage, prevPa
                     </div>
                 </div>
                 <div className={"table-body"}>
+                    {!isLoading && data.length === 0 &&
+                        <div className={"table-body-nodata"}>
+                            <div className={"table-body-nodata-text"}>
+                                Нет данных
+                                <br/>
+                                Проверьте подключение к Интернету или
+                                <br/>
+                                измените настройки фильтра.
+                            </div>
+                        </div>
+                    }
                     {isLoading
                         ? <div className={"table-body-loader"}>
                             <Loader/>
                         </div>
                         : <>
-                            {data.map((item, index) => (
+                            {!!data.length && data.map((item, index) => (
                                 <div key={index} className={"table-row"}>
                                     <div className={"table-cell"}>
                                         {item.id}

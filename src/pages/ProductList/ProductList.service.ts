@@ -69,8 +69,6 @@ export const useProductListController = () => {
     }
 
     useEffect(() => {
-        if (ids.length <= 0) return
-
         const getItems = () => {
             setIsLoading(true)
 
@@ -149,4 +147,8 @@ export const useFilterValues = () => {
     return {
         values
     }
+}
+
+export const removeEmpty = (obj: { [key: string]: any }) => {
+    return Object.entries(obj).filter(([, v]) => v != null && v !== '').reduce((acc, [k, v]) => ({...acc, [k]: v}), {});
 }

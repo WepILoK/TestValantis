@@ -2,15 +2,28 @@ import {Drawer} from "../Drawer/Drawer.tsx";
 import {Input} from "../Input/Input.tsx";
 import {Select} from "../Select/Select.tsx";
 import {Autocomplete} from "../Autocomplete/Autocomplete.tsx";
-import {useState} from "react";
+import React, {useState} from "react";
 import {useFilterValues} from "../../ProductList.service.ts";
 import "./DrawerFilter.style.sass"
-import {IFieldsState} from "./DrawerFilter.types.ts";
+import {IDrawerFilter, IFieldsState} from "./DrawerFilter.types.ts";
 
-export const DrawerFilter = () => {
+export const DrawerFilter: React.FC<IDrawerFilter> = ({applyFilters, resetFilters, isLoading}) => {
     const [isOpenDrawer, setIsOpenDrawer] = useState(false)
     const [fields, setFields] = useState<IFieldsState>({})
     const {values} = useFilterValues()
+
+    const clearFilterValues = () => {
+        resetFilters()
+        setFields({
+            brand: "",
+            product: "",
+            price: "",
+        })
+    }
+
+    const submitFilter = () => {
+        applyFilters(fields)
+    }
 
     return (
         <div className={"drawer-filter"}>
@@ -61,17 +74,18 @@ export const DrawerFilter = () => {
                         }}
                     />
                     <button
+                        disabled={isLoading}
                         onClick={() => {
-                            setIsOpenDrawer(true)
+                            submitFilter()
                         }}
                     >
                         Применить
                     </button>
                     <div className={"product-list-delimiter"}/>
                     <button
+                        disabled={isLoading}
                         onClick={() => {
-                            console.log(fields)
-                            setFields({})
+                            clearFilterValues()
                         }}
                     >
                         Сбрость
@@ -79,6 +93,7 @@ export const DrawerFilter = () => {
                 </div>
             </Drawer>
             <button
+                disabled={isLoading}
                 onClick={() => {
                     setIsOpenDrawer(true)
                 }}
@@ -87,8 +102,9 @@ export const DrawerFilter = () => {
             </button>
             <div className={"drawer-filter-delimiter"}/>
             <button
+                disabled={isLoading}
                 onClick={() => {
-                    setFields({})
+                    clearFilterValues()
                 }}
             >
                 Сбрость

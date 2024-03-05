@@ -1,12 +1,11 @@
 import "./ProductList.style.sass"
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Table} from "./components/Table/Table.tsx";
-import {useProductListController} from "./ProductList.service.ts";
+import {removeEmpty, useProductListController} from "./ProductList.service.ts";
 import {DrawerFilter} from "./components/DrawerFilter/DrawerFilter.tsx";
+import {IFieldsState} from "./components/DrawerFilter/DrawerFilter.types.ts";
 
 export const ProductList = () => {
-    const [isFiltered, setIsFiltered] = useState()
-
     const {
         isLoading,
         getFilteredProductIds, getProductIds, setInfo,
@@ -42,14 +41,29 @@ export const ProductList = () => {
         })
     }
 
+    const resetFilters = () => {
+        getProductIds()
+    }
+
+    const applyFilters = (filter: IFieldsState) => {
+        if (!filter.product && !filter.price && !filter.brand) {
+            return
+        } else {
+            getFilteredProductIds(removeEmpty(filter))
+        }
+    }
+
     useEffect(() => {
         getProductIds()
-        // getFilteredProductIds()
     }, [])
 
     return (
         <div className={"product-list"}>
-            <DrawerFilter/>
+            <DrawerFilter
+                applyFilters={applyFilters}
+                resetFilters={resetFilters}
+                isLoading={isLoading}
+            />
             <Table
                 data={products}
                 isLoading={isLoading}

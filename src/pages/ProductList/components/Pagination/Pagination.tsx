@@ -28,7 +28,7 @@ export const Pagination: React.FC<IPagination> = ({info, isLoading, nextPage, pr
             <div className={"pagination-item pagination-item-current"}>
                 {info.currentPage}
             </div>
-            {info.currentPage !== info.totalPages &&
+            {info.currentPage !== info.totalPages && info.totalPages !== 0 &&
                 <button
                     className={"pagination-item pagination-item-active"}
                     disabled={isLoading}
@@ -40,7 +40,7 @@ export const Pagination: React.FC<IPagination> = ({info, isLoading, nextPage, pr
             }
             <button
                 className={"pagination-item"}
-                disabled={info.currentPage === info.totalPages || isLoading}
+                disabled={info.currentPage === info.totalPages || isLoading || info.totalPages === 0}
                 onClick={() => {
                     nextPage()
                 }}
